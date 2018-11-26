@@ -4,8 +4,7 @@
 
 // })
 
-const cartBtn = f$.select("#cart_btn");
-const cartBadge = cartBtn.lastElementChild.lastElementChild;
+
 
 
 document.addEventListener("click", e => {})
@@ -14,6 +13,8 @@ document.addEventListener("click", e => {})
 
 
 function plusQty(item) {
+    // console.log(item);
+
     itemHandler(item, true)
 }
 
@@ -24,6 +25,7 @@ function minusQty(item) {
 function itemHandler(item, add) {
     let zItem = getItem(item.parentNode.parentNode.id);
     let itemQty = item.parentNode;
+
     let input = itemQty.children[1];
     let inStock = zItem.inStock;
     let qty = validateQty(input.value, inStock);
@@ -42,6 +44,20 @@ function itemHandler(item, add) {
 
 
 function toCart(item) {
+    // get div item__quantity
+    let itemQty = item.previousSibling.previousSibling;
+    //get inout
+    let input = itemQty.children[1];
+    // validate that at lest one items is enetered
+    if (input.value == "") {
+        input.classList.add("empty");
+        setTimeout(() => {
+            input.classList.remove("empty");
+        }, 500);
+        return;
+    }
+
+
     let dbItem = getItem(item.getAttribute('data-id').split(" ")[0]);
     let inStock = item.parentNode.firstElementChild.firstElementChild;
 
@@ -49,15 +65,16 @@ function toCart(item) {
     let toCart = dbItem.inStock - inStock;
     dbItem.inStock = inStock;
 
-    // get div item__quantity
-    let itemQty = item.previousSibling.previousSibling;
+
     updatePrice(itemQty, dbItem.price); //reset price
     itemQty.children[1].value = 1; //reset input
 
     //update cart
     updateZtore(dbItem);
     updateCart(dbItem.id, toCart);
+    updateCartBtn();
 }
+
 
 function updateCart(itemId, inCart) {
     let cart = getUser() + "Cart";
@@ -101,7 +118,13 @@ function getItem(id) {
             return key;
     }
 }
+function updateZtoreCart(item) {
+    let ztore = JSON.parse(sessionStorage.getItem(getUser()+"Ztore"))
+    let cart = JSON.parse(sessionStorage.getItem(getUser()+"Cart"))
+    console.log(ztore,cart);
+    
 
+}
 function updateZtore(item) {
     let ztore = getUser() + "Ztore";
     ztore = JSON.parse(sessionStorage.getItem(ztore))
@@ -156,5 +179,6 @@ function updatePrice(element, price) {
 
 function updateStock(element, inStock) {
     let badge = element.parentNode.firstElementChild.firstElementChild;
-    badge.innerText = inStock;
+    if (badge.classList.contains("item__img--inStock"))
+        badge.innerText = inStock;
 }

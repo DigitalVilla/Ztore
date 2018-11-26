@@ -16,7 +16,7 @@
     flex-direction: column;
 
 
-    
+
 
 
     &__btn {
@@ -55,20 +55,26 @@
 
         &--cart {
             position: relative;
-            
+
             & span {
                 position: absolute;
                 top: -10px;
                 right: -10px;
-                padding: 2px 2px;
+                padding: 3px 8px;
                 border-radius: 50%;
                 font-weight: 700;
-                font-size: 11px;
-
+                font-size: 12px;
+                transition: all .3s;
                 color: #fff;
                 background-color: $color-secondary;
+                box-shadow: 0 2rem 2rem rgba(#000, .2);
+                opacity: 0;
+                
             }
-            & svg {
+
+            .toCart {
+                transform: scale(1.2)
+                // border: 4px solid blue;
             }
         }
 

@@ -99,6 +99,7 @@
             height: 50%;
             display: flex;
             justify-content: space-around;
+            padding-right: 2rem;
 
             & input {
                 border: 1px solid lighten($color-primary, 30%);

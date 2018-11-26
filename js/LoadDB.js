@@ -38,7 +38,7 @@ function loadItems(arr) {
             innerHTML: `<span onClick="minusQty(this)"><svg >
                 <use xlink:href='img/sprites.svg#icon-minus'></use>
             </svg> </span> 
-            <input type="text" value="1" pattern="\d{1,5}">
+            <input type="text" placeholder="1" pattern="\d{1,5}">
             <span onClick="plusQty(this)"><svg>
               <use xlink:href='img/sprites.svg#icon-plus'></use>
             </svg></span>`
@@ -73,8 +73,10 @@ function loadZtore() {
 function loadCart() {
     let items = JSON.parse(sessionStorage.getItem(getUser() + "Cart"))
     cart.innerHTML = "";
-    if (items != null)
+    if (items != null) {
         loadCartItems(items)
+        updateCartBtn();
+    }
 }
 
 
@@ -87,8 +89,8 @@ function loadCartItems(arr) {
         // <div class="cart__item" id="card1">
         let item = f$.newElement(cart, "div", {
             class: "cart__item",
-            id: arr[i].id,
-            "data-id": arr[i].inCart
+            "data-id":arr[i].itemId,
+            "data-inCart": arr[i].inCart
         })
 
         const fig = f$.newElement(item, "figure", {
@@ -110,17 +112,18 @@ function loadCartItems(arr) {
 
 
         let controls = f$.newElement(content, "div", {
-            class: "cart__item--controls"
+            class: "cart__item--controls",
+            id: zItem.id,
         });
 
         f$.newElement(controls, "div", {
             class: "item__quantity"
         }, {
-            innerHTML: `<span onClick="minusQty(this)"><svg >
+            innerHTML: `<span onClick="Cart.minusQty(this)"><svg >
                 <use xlink:href='img/sprites.svg#icon-minus'></use>
             </svg> </span> 
             <input type="text" value="${arr[i].inCart}" pattern="\d{1,5}">
-            <span onClick="plusQty(this)"><svg>
+            <span onClick="Cart.plusQty(this);"><svg>
               <use xlink:href='img/sprites.svg#icon-plus'></use>
             </svg></span>`
         }); //quantiity selector 
@@ -131,4 +134,25 @@ function loadCartItems(arr) {
             <span class="total">${formatMoney(zItem.price*arr[i].inCart)}</span>`
         }); // price display
     }
+}
+
+
+function updateCartBtn() {
+    let cart = getUser() + "Cart";
+    cart = JSON.parse(sessionStorage.getItem(cart));
+    const items = cart.length;
+    
+    const cartBtn = f$.select("#cart_btn");
+    const cartBadge = cartBtn.lastElementChild.lastElementChild;
+
+
+   cartBadge.style.opacity = 1;
+   cartBadge.classList.add("toCart"); 
+   setTimeout(() => {
+    cartBadge.classList.remove("toCart");
+}, 700);
+   cartBadge.innerText = items;
+
+
+
 }

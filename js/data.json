@@ -13,19 +13,19 @@
     {
         "id": 13,
         "item": "Speakers",
-        "inStock": 88,
+        "inStock": 8,
         "price": 110
     },
     {
         "id": 14,
         "item": "Laptop",
-        "inStock": 64,
+        "inStock": 6,
         "price": 1450
     },
     {
         "id": 15,
         "item": "Television",
-        "inStock": 24,
+        "inStock": 11,
         "price": 2230
     },
     {
