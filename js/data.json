@@ -1,0 +1,37 @@
+[{
+        "id": 11,
+        "item": "Headphones",
+        "inStock": 4,
+        "price": 330
+    },
+    {
+        "id": 12,
+        "item": "Watch",
+        "inStock": 3,
+        "price": 240
+    },
+    {
+        "id": 13,
+        "item": "Speakers",
+        "inStock": 88,
+        "price": 110
+    },
+    {
+        "id": 14,
+        "item": "Laptop",
+        "inStock": 64,
+        "price": 1450
+    },
+    {
+        "id": 15,
+        "item": "Television",
+        "inStock": 24,
+        "price": 2230
+    },
+    {
+        "id": 16,
+        "item": "Video Game",
+        "inStock": 53,
+        "price": 380
+    }
+]

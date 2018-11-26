@@ -1,0 +1,88 @@
+// COLOR VARIABLES
+$color-primary: #ff005e;
+$color-primary-dark: #f30039;
+
+$color-secondary: #D400B3;
+$color-terciary: #FF5600;
+
+$color-success: #00CE8B;
+$color-danger: #ff5100;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: rgb(79, 58, 84);
+$color-grey-dark-2: rgb(99, 75, 109);
+
+// FONT VARIABLES
+$font-primary: 'Nunito',
+sans-serif;
+$font-display: 'Josefin Sans',
+sans-serif;
+
+*,
+::after,
+::before {
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit
+}
+
+html {
+    font-family: sans-serif;
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body {
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 1.6;
+}
+
+.container {
+    display: grid;
+    // name the columns for reference
+    grid-template-rows: 90vh min-content 40vw repeat(3, min-content);
+    grid-template-columns: [sidebar-start] 6rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+}
+
+
+
+::selection {
+    background: #ffffff; /* WebKit/Blink Browsers */
+    color: $color-primary;
+  }
+  ::-moz-selection {
+    background: #ffffff; /* Gecko Browsers */
+    color: $color-primary;
+  }
+
+  button:focus, button:active {
+    outline: none !important;
+    outline:0 !important;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+  }
+  
+ input::placeholder {
+    color: rgb(182, 36, 158);
+    opacity: .5;
+}
+  
+input::-moz-focus-inner { 
+    border: 0; 
+    border: none; 
+  }
+
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+    body {
+    }
+}

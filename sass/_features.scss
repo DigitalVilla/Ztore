@@ -1,0 +1,36 @@
+.features {
+    grid-column: center-start/center-end;
+    display: grid;
+    margin: 10vh 0;
+    // grid-template-columns: repeat(3, 1fr); //evenly separated.
+    //responsive design 
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    // grid-template-rows: auto == min-conent // so no need to specifiy here 
+    // adda gap between features    
+    grid-gap: 5rem;
+    align-items:start; // start at top instead of centered in the grid 
+
+}
+
+
+
+.feature {
+    display: grid;
+    // min icon size plus the rest of the container
+    grid-template-columns: min-content 1fr;
+    //add a gap 
+    grid-row-gap: 1.5rem;
+    grid-column-gap: 2.5rem;
+
+    &__icon {
+        fill: $color-primary;
+        width: 4.5rem;
+        height: 4.5rem;
+        //grow the icon column to the botom
+        grid-row: 1/sapn 2 //use span as no column was named and -1 does not work as con esplicit row was declared
+    }
+
+    &__text {
+        font-size: 1.7rem;
+    }
+}

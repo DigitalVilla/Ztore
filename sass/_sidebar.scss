@@ -1,0 +1,90 @@
+.sidebar {
+    background-color: $color-primary;
+    //delimit with  by tags
+    // grid-column: sidebar-start / sidebar-end;
+    //delimit height from begining to end  
+    // grid-row: 1;
+    padding-top: 5rem;
+
+
+    //fix navbar
+    position: fixed;
+    width: 6rem;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+
+    
+
+
+    &__btn {
+        position: fixed;
+        height: 60px;
+        width: 100%;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all .2s;
+        cursor: pointer;
+
+        &--span {
+            position: absolute;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.87) !important;
+            height: 100%;
+            width: .5rem;
+            content: "";
+            display: block;
+            visibility: hidden;
+        }
+
+        &--logo {
+            width: 2rem;
+        }
+
+        & svg {
+            width: 3rem;
+            height: 3rem;
+            fill: aliceblue;
+        }
+
+
+        &--cart {
+            position: relative;
+            
+            & span {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                padding: 2px 2px;
+                border-radius: 50%;
+                font-weight: 700;
+                font-size: 11px;
+
+                color: #fff;
+                background-color: $color-secondary;
+            }
+            & svg {
+            }
+        }
+
+        &:hover {
+            background: rgba($color-secondary, .6);
+        }
+
+        &:active {
+            background: $color-primary-dark;
+        }
+    }
+
+    .active {
+        visibility: visible;
+        background: rgba($color-secondary, .4);
+    }
+}
+
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_notification
