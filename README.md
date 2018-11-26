@@ -1,10 +1,11 @@
 <!-- https://raw.githubusercontent.com/dbader/readme-template/master/README.md -->
-# Ztore - high end online market
+# Ztore - a high-end online market
 Ztore is a functional prototype for an online shopping mall. 
-
+```sh
+It was the final project for SAIT's Advanced Web Development Course
+```
 ![](screenshot1.png)
 
-## It was the final project for SAIT's Advanced Web Development Course
 ### Technologies
 
 * **Read wnd write to MYSQL database**
