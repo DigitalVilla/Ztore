@@ -11,6 +11,7 @@
     // background: red;
     text-align: center;
     box-shadow: 0 2rem 4rem rgba(#000, .1);
+
     // border-left: 6px solid lighten( $color-primary,40%);
     & h2 {
         font-size: 2.4rem;
@@ -30,7 +31,7 @@
             justify-content: space-between;
             color: darken($color-grey-dark-2, 30%);
             padding-bottom: .5rem;
-            border-bottom: 2px solid lighten( $color-primary,40%);
+            border-bottom: 2px solid lighten($color-primary, 40%);
         }
 
 
@@ -41,16 +42,17 @@
 
         &--btn {
             align-self: center;
-            width: 70%;
+            width: 100%;
             position: relative;
             margin-bottom: 1.6rem;
-            padding-left: 1.5rem;
+
 
             &__link {
-                padding: 1rem 2rem;
+                padding: 1rem 0;
                 position: relative;
                 display: flex;
                 align-items: center;
+                justify-content: center;
 
                 &:link,
                 &:visited {
@@ -101,7 +103,7 @@
             }
 
             &:active::before {
-                background-color:  $color-primary;
+                background-color: $color-primary;
                 box-shadow: none;
             }
 
@@ -110,8 +112,8 @@
 
                 & .checkout-btn_icon,
                 & .checkout-btn_text {
-                    fill:  $color-primary;
-                    color:  $color-primary;
+                    fill: $color-primary;
+                    color: $color-primary;
                 }
             }
         }

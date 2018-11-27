@@ -1,8 +1,13 @@
-class fetcher {
+/**
+ * This class has the utility methods to retrieve data from Ajax call and dom 
+ */
+'use strict';
+
+class myFetch {
     constructor() {}
 
     //AJAX METHODS
-    fetcher(url, method, JsonMsg = null) {
+    API(url, method, JsonMsg = null) {
         method = method.toUpperCase();
         const params = {
             method,
@@ -28,68 +33,46 @@ class fetcher {
         }
         return response.json();
     }
-    //DOM METHODS
-    select(query) {
-        let select = document.querySelectorAll(query)
-        return (select.length === 1) ? select[0] : select;
-    }
-
-    newElement(parent, tag, attributes, content) {
-        let el = document.createElement(tag);
-        if (attributes)
-            for (let a in attributes) {
-                el.setAttribute(a, attributes[a]);
-            }
-        if (content)
-            for (let c in content) {
-                el[c] = content[c];
-            }
-        if (parent) {
-            parent.appendChild(el);
-            return parent.lastElementChild;
-        }
-        return el;
-    }
-
-    //UTILS
-    random(min, max) {
-        return (max > min) ?
-            ~~(min + (max + 1 - min) * Math.random()) : 0;
-    }
-
-    setCookie(name, value, days = 100) {
-        if (days == 0) //delete cookie
-            return document.cookie = `${name}=${null}; expires=Thu, 01-Jan-1970 00:00:01 UTC;path=/`;
-
-        function addDays(date, days) {
-            var myDate = new Date(date.valueOf());
-            myDate.setDate(myDate.getDate() + days);
-            return myDate;
-        }
-        document.cookie = `${name}=${encodeURI(value)}; expires=${addDays(new Date(),days).toUTCString()}`;
-    }
-
-    getCookie(name) {
-        var docCookies = document.cookie;
-        var cIndex = docCookies.indexOf(name + "=");
-        if (cIndex == -1) return null;
-
-        cIndex = docCookies.indexOf("=", cIndex) + 1;
-        var endStr = docCookies.indexOf(";", cIndex);
-        if (endStr == -1) endStr = docCookies.length;
-
-        return decodeURI(docCookies.substring(cIndex, endStr));
-    }
-
+   
 }
 
-const f$ = new fetcher();
+
+
+
+ //UTILS
+ function  random(min, max) {
+    return (max > min) ?
+        ~~(min + (max + 1 - min) * Math.random()) : 0;
+}
+
+function setCookie(name, value, days = 100) {
+    if (days == 0) //delete cookie
+        return document.cookie = `${name}=${null}; expires=Thu, 01-Jan-1970 00:00:01 UTC;path=/`;
+
+    function addDays(date, days) {
+        var myDate = new Date(date.valueOf());
+        myDate.setDate(myDate.getDate() + days);
+        return myDate;
+    }
+    document.cookie = `${name}=${encodeURI(value)}; expires=${addDays(new Date(),days).toUTCString()}`;
+}
+
+function getCookie(name) {
+    var docCookies = document.cookie;
+    var cIndex = docCookies.indexOf(name + "=");
+    if (cIndex == -1) return null;
+
+    cIndex = docCookies.indexOf("=", cIndex) + 1;
+    var endStr = docCookies.indexOf(";", cIndex);
+    if (endStr == -1) endStr = docCookies.length;
+
+    return decodeURI(docCookies.substring(cIndex, endStr));
+}
+
+
 
 
 //Easy PROTOTYPES
-
-
-
 // Fisher--Yates Algorithm
 Array.prototype.u_shuffle = function () {
     var m = this.length,

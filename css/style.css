@@ -20,7 +20,7 @@ body {
 
 .container {
   display: grid;
-  grid-template-rows: 90vh min-content 40vw repeat(3, min-content);
+  grid-template-rows: 90vh min-content 100vh repeat(3, min-content);
   grid-template-columns: [sidebar-start] 6rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end]; }
 
 ::selection {
@@ -121,17 +121,8 @@ input::-moz-focus-inner {
     justify-content: center;
     align-items: center;
     position: relative;
-    transition: all .2s;
+    transition: all .3s;
     cursor: pointer; }
-    .sidebar__btn--span {
-      position: absolute;
-      left: 0;
-      background-color: rgba(255, 255, 255, 0.87) !important;
-      height: 100%;
-      width: .5rem;
-      content: "";
-      display: block;
-      visibility: hidden; }
     .sidebar__btn--logo {
       width: 2rem; }
     .sidebar__btn svg {
@@ -161,7 +152,8 @@ input::-moz-focus-inner {
       background: #f30039; }
   .sidebar .active {
     visibility: visible;
-    background: rgba(212, 0, 179, 0.4); }
+    background: rgba(212, 0, 179, 0.4);
+    border-left: .5rem solid #fff; }
 
 .header {
   background-color: #4f3a54;
@@ -491,7 +483,7 @@ input::-moz-focus-inner {
 .cart {
   grid-column: full-start / col-end 6;
   background-color: #efe9e7;
-  padding: 3vh 3vw;
+  padding: 4vh 3vw;
   height: 100vh;
   text-align: center;
   overflow: auto; }
@@ -598,15 +590,15 @@ input::-moz-focus-inner {
       color: #ff005e; }
     .checkout__form--btn {
       align-self: center;
-      width: 70%;
+      width: 100%;
       position: relative;
-      margin-bottom: 1.6rem;
-      padding-left: 1.5rem; }
+      margin-bottom: 1.6rem; }
       .checkout__form--btn__link {
-        padding: 1rem 2rem;
+        padding: 1rem 0;
         position: relative;
         display: flex;
-        align-items: center; }
+        align-items: center;
+        justify-content: center; }
         .checkout__form--btn__link:link, .checkout__form--btn__link:visited {
           text-decoration: none;
           color: inherit; }
@@ -677,7 +669,7 @@ input::-moz-focus-inner {
 
 .copyright {
   font-size: 1.4rem;
-  color: #aaa;
+  color: #f9f7f6;
   margin-top: 6rem;
   margin-right: auto;
   margin-left: auto;

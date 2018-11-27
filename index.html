@@ -14,9 +14,9 @@
 
 <body class="container">
 
-    <div class="sidebar">
+    <div id="sidebar" class="sidebar">
+
         <a href="#header" class="sidebar__btn active">
-            <span class="sidebar__btn--span active"></span>
             <svg>
                 <use xlink:href='./img/sprites.svg#icon-home'></use>
             </svg>
@@ -134,7 +134,7 @@
     </section>
 
     <!-- l -->
-    <div id="shop" class="promo__pictures">
+    <div id="shop" class="promo__pictures revealOnScroll">
         <figure class="promo__figure--2"></figure>
     </div>
 
@@ -177,9 +177,6 @@
     </section>
 
     <section id="cart" class="cart">
-        <h2 class="heading-3">your Cart</h2>
-
-
         <!-- <div class="cart__item" >
             <figure class="cart__item--fig">
                 <div class="span">
@@ -217,8 +214,7 @@
     </section>
 
     <aside class="checkout">
-        <h2 class="heading-3"> Your Order
-        </h2>
+        <h2 class="heading-3"> Your Cart </h2>
 
         <form action="" method="post" class="checkout__form">
             <p class="checkout__form--date"> <span> Date:</span><span> Mon 11 Sep 2018 - 04:35 PM</span></p>
@@ -257,10 +253,16 @@
         </p>
     </footer>
 
-    <script type="text/javascript" src="./js/fetcher.js"></script>
-    <script type="text/javascript" src="./js/persist.js"></script>
-    <script type="text/javascript" src="./js/LoadDB.js"></script>
-    <script type="text/javascript" src="./js/selectors.js"></script>
+
+
+    <!-- //Model -->
+    <script type="text/javascript" src="./js/model/fetch.js"></script>
+    <script type="text/javascript" src="./js/model/persist.js"></script>
+    <script type="text/javascript" src="./js/model/model.js"></script>
+    <!-- //view -->
+    <script type="text/javascript" src="./js/view/view.js"></script>
+    <!-- //controller-->
+    <script type="text/javascript" src="./js//controller/controller.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
 </body>
 
