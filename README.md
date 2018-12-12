@@ -14,5 +14,10 @@ It was the final project for SAIT's Advanced Web Development Course
 * **Ajax functionality for performance**
 * **And a beautiful UI Design**
 
+
+##### Warning
+The REST API is not available for distribution. So this app will not work as It was intended.
+Once my school workload ends next april, I may add a localStorage DB just to fake the API and the app can be accessed.
+
 ![](screenshot2.png)
 
