@@ -8,14 +8,27 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i|Nunito:300,300i" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="./css/style.css">
-    <title>&mdash; Ztore &mdash;</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Ztore.</title>
 </head>
+
 
 <body class="container">
 
-    <div id="sidebar" class="sidebar">
 
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="sidebar" class="sidebar">
         <a href="#header" class="sidebar__btn active">
             <svg>
                 <use xlink:href='./img/sprites.svg#icon-home'></use>
@@ -32,7 +45,6 @@
             </svg>
         </a>
 
-
         <a id="cart_btn" href="#cart" class="sidebar__btn">
             <span class="sidebar__btn--span"></span>
             <div class="sidebar__btn--cart">
@@ -42,8 +54,6 @@
                 <span class="inCart">6</span>
             </div>
         </a>
-
-     
 
         <a id="logout_btn" href="#header" class="sidebar__btn">
             <span class="sidebar__btn--span"></span>
@@ -55,42 +65,22 @@
 
     <header id="header" class="header">
         <img src="./img/logo.png" alt="Ztore logo" class="header__logo">
-        <h3 class="heading-4 light">A VIP place to call your own</h3>
-        <h1 class="heading-1">ZTORE your ultimate shopping experience</h1>
-        <button class="btn header__btn">Browse in</button>
+        <h3 id="username-user" class="heading-4 light slideInRight">A VIP place to call your own</h3>
+        <h1 class="heading-1">ZTORE. the ultimate shopping experience</h1>
+        <a href="#shop" class="btn header__btn">Browse in</a>
         <div class="header__seenon-text">Seen on</div>
         <div class="header__seenon-logos">
             <img src="./img/logo-bbc.png" alt="Seen on logo 1">
             <img src="./img/logo-forbes.png" alt="Seen on logo 2">
             <img src="./img/logo-techcrunch.png" alt="Seen on logo 3">
             <img src="./img/logo-bi.png" alt="Seen on logo 4">
-        </div> 
+        </div>
     </header>
 
-    <div class="login">
-        <div class="login__title">
-            <img class="login__logo" src="img/logow.png" alt="logo">
-            <span class="heading-4 light"> Ztore Registration </span>
-        </div>
-        <p class="message"> sorry wron data</p>
-        <form method="get" action="#">
-            <input class="input" type="text" type="text" placeholder="User Name" pattern="[A-Za-z]{1,}" title="No digits"
-                required="true">
-            <input class="input" type="password" placeholder="password" required="true">
-            <input class="input" type="password" placeholder="Confirm password" required="true">
-            <button class="login__btn btn"> Register </button>
-
-            <label class="login__checkbox">
-                <input id="remember" type="checkbox" />
-                <span class="login__btn--checkbox span"></span> Remember me
-            </label>
-            <p id="login__trigger">Login</p>
-
-        </form>
+    <div id="login" class="login animated">
     </div>
 
-    <section class="features">
-
+    <section class="features ">
         <div class="feature"><svg class='feature__icon'>
                 <use xlink:href='img/sprite.svg#icon-global'></use>
             </svg>
@@ -133,114 +123,53 @@
         </div>
     </section>
 
-    <!-- l -->
-    <div id="shop" class="promo__pictures revealOnScroll">
+    <div id="shop" class="promo__pictures revealOnScroll ">
         <figure class="promo__figure--2"></figure>
     </div>
 
-    <div class="promo__content">
+    <div class="promo__content ">
         <h3 class="heading-3 mb-sm">Ztore's new winter collection!</h3>
-        <h2 class="heading-2 mb-md">&ldquo;You will forget about Santa!&rdquo;</h2>
+        <h2 class="heading-2 mb-md">&ldquo;Discounts that will upset Santa!&rdquo;</h2>
         <p class="promo__text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore quis ipsum quisquam
             repudiandae dolor deleniti iusto corporis velit! Corporis, eaque? </p>
         <button class="btn">view the deals</button>
     </div>
 
 
-    <section id="ztore" class="store">
-       <!-- template  
-        <div class="item" style="display:none;">
-            <figure class="item__img item-1">
-                <span class='item__img--inStock'> 23 </span>
-            </figure>
-            <h5 class="item__name">Headphones</h5>
-            <p class="item__description"> </p>
-            <div class="item__quantity">
-                <svg>
-                    <use xlink:href='img/sprites.svg#icon-minus'></use>
-                </svg>
-                <input type="text" value="1" pattern="\d{1,5}">
-                <svg>
-                    <use xlink:href='img/sprites.svg#icon-plus'></use>
-                </svg>
-            </div>
-            <div class="item__price">
-                <svg>
-                    <use xlink:href='img/sprites.svg#icon-dollar'></use>
-                </svg> <span class="total">14.99</span>
-                <span class="total"></span>
-            </div>
-            <button type="submit" class="btn">Add to Cart</button>
-        </div>
--->
-
+    <section id="ztore" class="store ">
     </section>
 
-    <section id="cart" class="cart">
-        <!-- <div class="cart__item" >
-            <figure class="cart__item--fig">
-                <div class="span">
-                    <svg>
-                        <use xlink:href='img/sprites.svg#icon-close'></use>
-                    </svg>
-                </div>
-            </figure>
-
-            <div class="cart__item--content">
-                <div class="cart__item--details">
-                    <p>Bananas</p>
-                </div>
-                <div class="cart__item--controls">
-                    <div class="item__quantity">
-                        <svg>
-                            <use xlink:href='img/sprites.svg#icon-minus'></use>
-                        </svg>
-                        <input type="text" value="1" pattern="\d{1,5}">
-                        <svg>
-                            <use xlink:href='img/sprites.svg#icon-plus'></use>
-                        </svg>
-                    </div>
-                    <div class="item__price">
-                        <svg>
-                            <use xlink:href='img/sprites.svg#icon-dollar'></use>
-                        </svg> <span class="total">14.99</span>
-                        <span class="total"></span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-
+    <section id="cart" class="cart ">
     </section>
 
-    <aside class="checkout">
+    <aside class="checkout ">
         <h2 class="heading-3"> Your Cart </h2>
 
         <form action="" method="post" class="checkout__form">
             <p class="checkout__form--date"> <span> Date:</span><span> Mon 11 Sep 2018 - 04:35 PM</span></p>
-            <p class="checkout__form--subtotal"> <span> Subtotal:</span><span> $123.40</span></p>
-            <p class="checkout__form--discount"> <span> Discount 10%:</span><span> $12.34</span></p>
-            <p class="checkout__form--shipping"> <span> Shipping:</span><span> $15.00</span></p>
-            <p class="checkout__form--GST"> <span> GST 5%:</span><span> $34</span></p>
+            <p class="checkout__form--subtotal"> <span> Subtotal:</span><span>$0.00</span></p>
+            <p class="checkout__form--GST"> <span> GST 5%:</span><span>$0.00</span></p>
+            <p class="checkout__form--shipping"> <span> Shipping:</span><span> $0.00</span></p>
+            <p class="checkout__form--discount"> <span> Discount 10%:</span><span> $0.00</span></p>
 
 
             <h3 class="checkout__form--total">Total:
-                <span class="total-price">$99.00</span>
+                <span class="total-price">$0.00</span>
             </h3>
 
             <div class="checkout__form--btn">
 
-                <a type="submit" class="checkout__form--btn__link" href="#popup">
+                <a type="submit" id="checkoutBtn" class="checkout__form--btn__link" href="#">
                     <svg class='checkout__form--btn__icon'>
                         <use xlink:href='./img/sprites.svg#icon-currency'></use>
                     </svg>
                     <span class="checkout__form--btn__text">Check Out</span>
-                </a> 
+                </a>
             </div>
         </form>
     </aside>
 
-    <footer class="footer">
+    <footer class="footer ">
         <ul class="nav">
             <li class="nav__item"><a href="#" class="nav__link">More about Ztore</a></li>
             <li class="nav__item"><a href="#" class="nav__link">Become a partner</a></li>
@@ -249,10 +178,182 @@
             <li class="nav__item"><a href="#" class="nav__link">Contact us</a></li>
         </ul>
         <p class="copyright light">
-            &copy; Copyright 2019 by <a href="http://www.DigitalVilla.co" class="light"> Digital Villa.</a>   to learn more visit us at 
+            &copy; Copyright 2019 by <a href="http://www.DigitalVilla.co" class="light"> Digital Villa.</a> to learn
+            more visit us at
         </p>
     </footer>
 
+    <!-- 
+    <div class="adminPanel animated">
+        <div class="adminPanel__header">
+            <div>
+                <h3 id="username-admin" class="heading-4">Welcome back Villa</h3>
+                <h1 class="heading-1 primary ">ZTORE. Admin Panel</h1>
+            </div>
+            <div class="control">
+                <button class="btn" onclick="fillTable(false)">Items</button>
+                <button class="btn active" onclick="fillTable(true)">Users</button>
+            </div>
+        </div>
+        <button class="exit__btn" onclick="control.logOutHandler()">
+            <svg class='exit__btn--icon'>
+                <use xlink:href='./img/sprites.svg#icon-exit'></use>
+            </svg>
+        </button>
+
+        <div id="adminContainer">
+            <div class="table-responsive-vertical ">
+                <table id="table" class="table table-hover  table-mc-light-blue shadow-z-1">
+                    <thead id="table__header">
+                        <tr>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>In Stock</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                     
+                        
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="animated slideInLeft">
+
+                            <td >Television</td>
+                            <td> 23.69</td>
+                            <td> 123 </td>
+                            <td data-title="delete" class='admin__deleteBtn'>
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_primary'>
+                                        <use xlink:href='./img/sprites.svg#icon-minus-circle'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                            <td data-title="persist">
+                                <button class="ad__Btn">
+                                    <svg class='ad__Btn--icon ad__Btn--icon_success'>
+                                        <use xlink:href='./img/sprites.svg#icon-refresh'></use>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="newItem ">
+                        <div class="newItem__input animated slideInRight " >
+                            </div>
+                    <button class="newItem__Btn ad__Btn " onclick="">
+                        <svg class='ad__Btn--icon '>
+                            <use xlink:href='./img/sprites.svg#icon-plus-circle'></use>
+                        </svg>
+                    </button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+-->
 
 
     <!-- //Model -->
@@ -262,8 +363,11 @@
     <!-- //view -->
     <script type="text/javascript" src="./js/view/view.js"></script>
     <!-- //controller-->
+    <script type="text/javascript" src="./js//controller/LoginCTRL.js"></script>
     <script type="text/javascript" src="./js//controller/controller.js"></script>
+
     <script type="text/javascript" src="./js/main.js"></script>
 </body>
+
 
 </html>

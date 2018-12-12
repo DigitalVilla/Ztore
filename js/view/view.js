@@ -1,28 +1,38 @@
 class myView {
 
-    constructor () {
+    constructor() {
         this.cartBtn = this.$("#cart_btn");
         this.sideNav = this.$("#sidebar");
-    }
-    updateZtoreCart(item) {
-        let ztore = JSON.parse(sessionStorage.getItem(getUser() + "Ztore"))
-        let cart = JSON.parse(sessionStorage.getItem(getUser() + "Cart"))
-        console.log(ztore, cart);
+        this.c = new myViews();
     }
 
     //DOM METHODS
+    displayStatic(content = true) {
+        const app = view.$(".container");
+        app.style.height = content && "100vh" || "auto";
+        app.style.overflow = content && "hidden" || "auto";
+    }
+
     $(query) {
         let select = document.querySelectorAll(query)
         return (select.length === 1) ? select[0] : select;
     }
 
-    updateCartBtn(cart) {
-        const len = cart.length;
-        const cartBadge = this.cartBtn.lastElementChild.lastElementChild;
+    displayUser(type) {
+        this.$("#username-" + type).innerText = `Welcome ${model.getUser()}!`
+    }
 
-        this.addClass(cartBadge,"toCart",700);
-        cartBadge.style.opacity = 1;
-        cartBadge.innerText = len;
+
+    updateCartBtn() {
+        const len = model.getJSON("Cart").length;
+        const cartBadge = this.cartBtn.lastElementChild.lastElementChild;
+        if (len > 0) {
+            this.addClass(cartBadge, "toCart", 700);
+            cartBadge.style.opacity = 1;
+            cartBadge.innerText = len;
+        } else {
+            cartBadge.style.opacity = 0;
+        }
     }
 
     updateQtyInput(input, qty) {
@@ -31,7 +41,7 @@ class myView {
 
     updatePriceLabel(element, price) {
         let tag = element.nextSibling.lastElementChild;
-        tag.innerText = formatMoney(price);
+        tag.innerText = this.formatMoney(price);
     }
 
     updateStockBadge(element, inStock) {
@@ -46,9 +56,14 @@ class myView {
      */
     addClass(element, className, timer = 500) {
         element.classList.add(className);
+        console.log(element)
+        if (className == "fadeIn")
+            element.style.opacity = "1 !imoprtant;"
         if (timer != 0) {
             setTimeout(() => {
                 element.classList.remove(className);
+                 if (className == "fadeIn")
+                element.style.opacity = "0 !imoprtant;"
             }, timer);
         }
     }
@@ -57,7 +72,22 @@ class myView {
      * @param {*} className to add
      * @param {*} timer to remove class  optional.
      */
-    toggleOn(list, element, className) {
+    removeClass(element, className, timer = 500) {
+        element.classList.remove(className);
+        if (timer != 0) {
+            setTimeout(() => {
+                element.classList.add(className);
+            }, timer);
+        }
+    }
+
+
+    /**
+     * @param {*} element to add  the new class
+     * @param {*} className to add
+     * @param {*} timer to remove class  optional.
+     */
+    toggleOn(list, element, className = "active") {
         for (const el of list) {
             el.classList.remove(className);
         }
@@ -87,148 +117,110 @@ class myView {
         return el;
     }
 
+    clearLogin() {
+        let log = this.$("#login");
+        let bg = this.$(".loginBG");
+
+        view.addClass(log, "fadeOut", 1000);
+        view.addClass(bg, "fadeOut", 1000);
+        setTimeout(() => {
+            bg.style.display = "none";
+            log.style.display = "none";
+        }, 1000);
+    }
+
+    updateOrder() {
+        let inv = this.getTotal();
+
+        let form = order.lastElementChild;
+        let date = form.children[0].lastElementChild;
+        date.innerText = this.dateToString();
+
+        let SUBTOTAL = form.children[1].lastElementChild;
+        SUBTOTAL.innerText = "$" + this.formatMoney(inv.total);
+        let GST = form.children[2].lastElementChild;
+        GST.innerText = "$" + this.formatMoney(inv.gst);
+        let SHIPPING = form.children[3].lastElementChild;
+        SHIPPING.innerText = "$" + this.formatMoney(inv.shipping);
+        let DISCOUNT = form.children[4].lastElementChild;
+        DISCOUNT.innerText = "$" + this.formatMoney(inv.discount);
+        let TOTAL = form.children[5].lastElementChild;
+        TOTAL.innerText = "$" + this.formatMoney(inv.total + inv.gst + inv.shipping - inv.discount);
+    }
+
+
+    formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+        try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
+    dateToString() {
+        let d = new Date() + "";
+        return (d.split(" ")).splice(0, 5).join(" ");
+    }
+
+    getTotal() {
+        let total = 0
+        let cart = model.getJSON("Cart");
+        if (cart != null && cart.length > 0)
+            for (const c of cart) {
+                total += model.getItem(c.id, "Ztore").price * c.qty;
+            }
+        return {
+            total,
+            gst: total * 0.05,
+            shipping: total > 1000 ? 22 : total > 100 ? 4.5 : 0,
+            discount: total * 0.1
+        };
+    }
+
+    paintAdmin(animated = true) {
+        const admin = view.$(".adminPanel");
+        admin.style.display = "block";
+        if (animated)
+            this.addClass(admin, "fadeIn", 1000);
+
+    }
 
     loadItems(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].inStock == 0) continue;
-            const item = this.newElement(ztore, "div", {
-                class: "item",
-                id: arr[i].id,
-                "data-id": arr[i].inStock
-            }) //main div
-            const fig = this.newElement(item, "figure", {
-                class: "item__img"
-            }, {
-                innerHTML: `<span class='item__img--inStock'>
-            ${arr[i].inStock}</span>`
-            }) // image holder
-            fig.style.backgroundImage = `linear-gradient(rgba(255, 0, 94, 0.1), rgba(212, 0, 179, 0.3)),
-            url(./img/${arr[i].item.replace(/\s/g,'').toLowerCase()}.png)`; //image style
-            item.innerHTML += `<h5 class="item__name">${arr[i].item}</h5>
-             <p class="item__description">${this.lorem(18)}</p>`; // title and dummy text;     
-            this.newElement(item, "div", {
-                class: "item__quantity"
-            }, {
-                innerHTML: `<span onClick="minusQty(this)"><svg >
-                <use xlink:href='img/sprites.svg#icon-minus'></use>
-            </svg> </span> 
-            <input type="text" placeholder="1" pattern="\d{1,5}">
-            <span onClick="plusQty(this)"><svg>
-              <use xlink:href='img/sprites.svg#icon-plus'></use>
-            </svg></span>`
-            }); //quantity selector 
-            this.newElement(item, "div", {
-                class: "item__price"
-            }, {
-                innerHTML: `<svg><use xlink:href='img/sprites.svg#icon-dollar'></use></svg>
-            <span class="total">${formatMoney(arr[i].price)}</span>`
-            }); // price display
-            this.newElement(item, "button", {
-                class: "btn",
-                type: "submit",
-                "data-id": arr[i].id,
-                onClick: "toCartBtn(this)"
-            }, {
-                innerText: "Add To Cart"
-            }); // button to cart
-        }
+        this.c.loadItems(arr);
     }
-
-
 
     loadCartItems(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            let zItem = model.getItem(arr[i].id);
-            // <div class="cart__item" id="card1">
-            let item = this.newElement(cart, "div", {
-                class: "cart__item",
-                "data-id": arr[i].id,
-                "data-inCart": arr[i].inCart
-            })
-
-            const fig = this.newElement(item, "figure", {
-                class: "cart__item--fig"
-            }, {
-                innerHTML: `<div class="span">
-            <svg><use xlink:href='img/sprites.svg#icon-close'></use>
-            </svg></div>`
-            }) // image holder
-
-            fig.style.backgroundImage = `linear-gradient(rgba(255, 0, 94, 0.1), rgba(212, 0, 179, 0.3)),
-            url(./img/${(zItem.item).replace(/\s/g,'').toLowerCase()}.png)`; //image style
-            let content = this.newElement(item, "div", {
-                class: "cart__item--content"
-            }, {
-                innerHTML: `<div class="cart__item--details">
-                <p>${zItem.item}</p></div>`
-            })
-
-            let controls = this.newElement(content, "div", {
-                class: "cart__item--controls",
-                id: zItem.id,
-            });
-
-            this.newElement(controls, "div", {
-                class: "item__quantity"
-            }, {
-                innerHTML: `<span onClick="minusCart(this)"><svg >
-                <use xlink:href='img/sprites.svg#icon-minus'></use>
-            </svg> </span> 
-            <input type="text" value="${arr[i].inCart}" pattern="\d{1,5}">
-            <span onClick="plusCart(this);"><svg>
-              <use xlink:href='img/sprites.svg#icon-plus'></use>
-            </svg></span>`
-            }); //quantiity selector 
-            this.newElement(controls, "div", {
-                class: "item__price"
-            }, {
-                innerHTML: `<svg><use xlink:href='img/sprites.svg#icon-dollar'></use></svg>
-            <span class="total">${formatMoney(zItem.price*arr[i].inCart)}</span>`
-            }); // price display
-        }
-    }
-
-    lorem(words) {
-        let lorem = `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda porro autem cumque saepe reiciendis? Voluptatum quas at ex minus architecto quaerat veritatis eaque ipsum doloremque corporis repudiandae, animi eum doloribus delectus facilis rerum quod, numquam laudantium repellat sint quo voluptatibus. Culpa necessitatibus minus deleniti voluptatibus excepturi similique officia cupiditate voluptates corporis quam, tempore repudiandae illo at, fugit ipsa facere numquam eligendi quae temporibus. Rerum error repellat nihil. Tenetur possimus dolores, saepe quae non quas ratione? Cupiditate, blanditiis libero obcaecati natus cum dicta a? Minus culpa voluptates dolore. Mollitia, necessitatibus quam, non laborum odio esse ipsa ab tempore a vitae provident!`.split(" ");
-        let copy = [];
-        for (let i = 0; i < lorem.length; i++) {
-            copy[i] = lorem[i];
-            if (i == words - 1)
-                break;
-        }
-        return copy.join(" ");
+        this.c.loadCartItems(arr);
 
     }
+
+    paintLogin(form, animated = true, username = "") {
+        this.c.paintLogin(form, animated, username);
+    }
+
+
+    paintAdminTable(elements, users) {
+        this.c.paintAdminTable(elements, users);
+    }
+
+
+    addNewUserInput() {
+        return this.c.addNewUserInput();
+    }
+
+    addNewItemInput() {
+        return this.c.addNewItemInput();
+    }
+    paintInvoice() {
+        this.c.paintInvoice();
+    }
+
 }
-
-
-//lazyloading
-let isVisible = (elem) => {
-    let bounding = elem.getBoundingClientRect();
-    return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-};
-
-
-function scrollToElement(pageElement) {
-    var positionX = 0,
-        positionY = 0;
-
-    while (pageElement != null) {
-        positionX += pageElement.offsetLeft;
-        positionY += pageElement.offsetTop;
-        pageElement = pageElement.offsetParent;
-        window.scrollTo(positionX, positionY);
-    }
-}
-
-// var pageElement = document.getElementById("insideNYTimesHeader");
-// scrollToElement(pageElement);
-
-// document.getElementById("elementID").scrollIntoView();
-
-// // location.hash = "elementId"

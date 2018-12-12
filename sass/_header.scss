@@ -1,12 +1,13 @@
 .header {
     background-color: $color-grey-dark-1;
-    grid-column: full-start / col-end 6;
+    grid-column: full-start / full-end;
     background-image: linear-gradient( rgba($color-secondary, .8), rgba($color-primary, .8)), url(../img/louis.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     padding: 5vh 5vw;
     // padding-top: 4rem;
+    transition: all 2s;
 
     display: grid;
     grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;
@@ -14,6 +15,15 @@
     grid-row-gap: 1.5rem;
     justify-content: center;
    
+    @media only screen and (max-width: $bp-800) {
+ grid-column: full-start / full-end;
+    }
+
+
+    @media only screen and (max-width: $bp-400) {
+        padding-left: 4rem; 
+     }
+
 
     &__logo {
         height: 10rem;

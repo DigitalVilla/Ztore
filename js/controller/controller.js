@@ -1,137 +1,110 @@
 class controller {
 
     constructor() {
+        this.z = new ZtoreCTRL();
+        this.a = new AdminCTRL();
+        this.url = "http://localhost:8084/ZtoresAPI/api/";
+    }
 
+    init() {
+        view.displayStatic(); // no scroll
+        let user = model.getUser();
+        if (user == null) { // no cookie in the system
+            view.paintLogin("Login")
+        } else {
+            fetcher.API(`${this.url}users/${user}/type`, "GET")
+                .then((type) => {
+                    view.displayUser(type);
+                    if (type != "admin") {
+                        view.displayStatic(false); //allow scroll
+                        this.z.loadDatabase();
+                        this.z.loadUserCart();
+
+                    } else if (type == "admin") {
+                        view.displayStatic();
+                        this.adminHandler();
+                    }
+                })
+        }
     }
 
     itemHandler(item, add) {
-        //get item from session storage
-        let zItem = model.getItem(item.parentNode.parentNode.id);
-        let parentNode = item.parentNode;
-
-        //get controller
-        let input = parentNode.children[1];
-        let inStock = zItem.inStock;
-        let qty = model.validateQty(input.value, inStock);
-
-        if (qty > 0) {
-            qty = (add) ? (qty + 1 > inStock) ? inStock : ++qty :
-                (qty - 1 < 1) ? 0 : --qty;
-        } else
-            qty = 0;
-        qty = (qty == 0) ? 1 : qty;
-
-        // zItem.inStock = parseInt(inStock - input.value); // might not be needed
-        view.updateQtyInput(input, qty);
-        view.updatePriceLabel(parentNode, qty * zItem.price);
-        view.updateStockBadge(parentNode, inStock - input.value);
+        this.z.itemHandler(item, add);
     }
 
     cartItemHandler(item, add) {
-        //get item from session storage
-        let zItem = model.getItem(item.parentNode.parentNode.id);
-        let parentNode = item.parentNode;
-        console.log(zItem);
-        return;
-        
-
-        //get controller
-        let input = parentNode.children[1];
-        let inStock = zItem.inStock;
-        let qty = model.validateQty(input.value, inStock);
-
-        if (qty > 0) {
-            qty = (add) ? (qty + 1 > inStock) ? inStock : ++qty :
-                (qty - 1 < 1) ? 0 : --qty;
-        } else
-            qty = 0;
-        qty = (qty == 0) ? 1 : qty;
-
-        // zItem.inStock = parseInt(inStock - input.value); // might not be needed
-        view.updateQtyInput(input, qty);
-        view.updatePriceLabel(parentNode, qty * zItem.price);
-        view.updateStockBadge(parentNode, inStock - input.value);
+        this.z.cartItemHandler(item, add);
     }
 
+    cartDeleteHandler(item) {
+        this.z.cartDeleteHandler(item);
+    }
 
     cartBtnHandler(item) {
-        // get div item__quantity
-        let parentNode = item.previousSibling.previousSibling;
-        let input = parentNode.children[1]; //get input
-
-        // validate that at lest one item is entered
-        if (input.value == "") {
-            view.addClass(input, "empty"); // update view 
-            return;
-        }
-        // getItem from localZtore
-        let dbItem = model.getItem(item.getAttribute('data-id').split(" ")[0]);
-        // get current inStock value from item's badge
-        let inStock = item.parentNode.firstElementChild.firstElementChild;
-        inStock = parseInt(inStock.innerText);
-        //calculate number of elements going to cart
-        let toCart = dbItem.inStock - inStock;
-
-        //persist local storage
-        dbItem.inStock = inStock;
-        model.updateLocalZtore(dbItem);
-        //persist local Cart id and number of elements
-        model.updateLocalCart(dbItem.id, toCart);
-
-        this.persistDatabaseB();
+        this.z.cartBtnHandler(item);
     }
 
-    loadZtore() {
-        let items = JSON.parse(sessionStorage.getItem(getUser() + "Ztore"))
-        ztore.innerHTML = "";
-        loadItems(items)
+    loginHandler(e) {
+        new LoginCTRL(e).loginHandler();
     }
 
-    loadCart() {
-        let items = JSON.parse(sessionStorage.getItem(getUser() + "Cart"))
-        cart.innerHTML = "";
-        if (items != null) {
-            loadCartItems(items)
-            updateCartBtn();
-        }
+    logOutHandler() {
+        sessionStorage.clear();
+        window.location.href = "SessionControl?logout=true";
     }
 
-    loadDatabase() {
-        this.persistDatabaseB(); 
-        return;
-    
-        // Fetch user's data
-        fetcher.API('/js/data/data.json', "get")
-            .then(items => {
-                model.persistLocal(items, "Ztore");
-                view.loadItems(items.u_shuffle());
-            })
-        // Fetch user's cart
-        fetcher.API('/js/data/cart.json', "get")
-            .then(cart => {
-                model.persistLocal(cart, "Cart");
-                view.loadCartItems(cart);
-                view.updateCartBtn(cart);
-            })
+    formHandler(form) {
+        view.paintLogin(form, false);
     }
 
-    persistDatabaseB() {
-        //  send updated local db to server 
-        //fetch from server all db 
-
-        // loadDatabase()
-
-        /////temporal 
-        let items = model.getJSON("Ztore");
-        model.persistLocal(items, "Ztore");
-        view.$("#ztore").innerHTML = "";
-        view.loadItems(items);
-        
-        let cart = model.getJSON("Cart");
-        view.$("#cart").innerHTML = "";
-        model.persistLocal(cart, "Cart");
-        view.loadCartItems(cart);
-        view.updateCartBtn(cart);
+    checkoutHandler() {
+        if (model.getJSON("Cart").length == 0) //delete global
+            return view.removeClass(view.$(".orderMsg"), "hideOP", 1E3)
+        fetcher.API(`${this.url}cart/${model.getUser()}/all`, "DELETE").then(() => {
+            invoice.style.display = "block";
+            view.displayStatic();
+            view.paintInvoice();
+            model.persistLocal([], "Cart"); //delete local
+        })
     }
 
+    sendInvoiceHandler() {
+        window.location.href = "SessionControl?sendInvoice=true";
+        invoice.style.display = "none";
+        invoice.innerHTML = "";
+        view.$(".loginBG").remove();
+    }
+
+    adminHandler(animate = true) {
+        view.paintAdmin(animate);
+        this.a.printTableHandler(true);
+    }
+
+    /**
+     * 
+     * @param {boolean} true if the list belongs to users, false if it belongs to items;
+     */
+    printTableHandler(users) {
+        this.a.printTableHandler(users);
+    }
+
+    userActionsHandler(user, param, row) {
+        this.a.userActionsHandler(user, param, row);
+
+    }
+
+    addNewHandler(table) {
+        this.a.addNewHandler(table);
+    }
+
+    deleteItemHandler(id, row) {
+        this.a.deleteItemHandler(id, row);
+    }
+
+    saveItemHandler(id, row) {
+        this.a.saveItemHandler(id, row);
+    }
+    closeFields() {
+        this.a.closeFields();
+    }
 }

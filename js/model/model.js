@@ -1,54 +1,78 @@
 class myModel {
     constructor() {
+        this.cartDb = "Cart";
+        this.ztoreDb = "Ztore";
+        this.url = "http://localhost:8084/ZtoresAPI/api/";
     }
 
     getUser() {
-        return "villa";
+        return sessionStorage.getItem("ZtoreUser");
+    }
+    setUser(user) {
+        sessionStorage.setItem("ZtoreUser", user.u_capsWord());
     }
 
-    getJSON(data){
-        return JSON.parse(sessionStorage.getItem(this.getUser() +data))
+
+    getJSON(data) {
+        let dbID = (data != "Ztore") ? this.getUser() : "";
+        return JSON.parse(sessionStorage.getItem(dbID + data))
     }
 
-    persistLocal(items,data) {
-        sessionStorage.setItem(this.getUser() + data, JSON.stringify(items))
+    persistLocal(items, data) {
+        // the Ztore is global thhe cart is specific of  a user
+        let dbID = (data != "Ztore") ? this.getUser() : "";
+        sessionStorage.setItem(dbID + data, JSON.stringify(items))
     }
 
     /**
      * retrieves the element from local storage  
      * @param {*}  
      */
-    getItem(id) {
-        for (const key of this.getJSON("Ztore")) {
+    getItem(id, data) {
+        for (const key of this.getJSON(data)) {
             if (key.id == id)
                 return key;
         }
     }
 
+
     /**
-     * 
+     * pass the entire obj
      * @param {DOM} item 
      */
-    updateLocalZtore(item) {
-        let ztore = this.getJSON("Ztore");
+    updateItem(item, data) {
+        let array = this.getJSON(data);
 
-        for (const z of ztore) {
-            if (z.id == item.id) {
-                z.inStock = item.inStock;
-            }
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id == item.id)
+                array[i] = item;
         }
-        //persist
-        this.persistLocal(ztore,"Ztore");
+        this.persistLocal(array, data);
+    }
+    /**
+     * pass the entire obj
+     * @param {DOM} item 
+     */
+    deleteItem(item, data) {
+        let array = this.getJSON(data);
+
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id == item.id)
+                array.splice(i, 1);
+        }
+        this.persistLocal(array, data);
     }
 
-    updateLocalCart(id, inCart) {
+
+    //pass id and in cart
+    updateToCart(id, qty) {
         let cart = this.getJSON("Cart");
         let match = !1;
 
         // if cart has the same item already
         for (const item of cart) {
             if (item.id === id) {
-                item.inCart += inCart
+                item.qty += parseInt(qty)
                 match = !0;
             }
         }
@@ -56,28 +80,72 @@ class myModel {
         if (!match) {
             cart.push({
                 id,
-                inCart,
-                user: this.getUser()
+                qty,
+                username: this.getUser()
             });
         }
         //persist
-        this.persistLocal(cart,"Cart");
+        this.persistLocal(cart, "Cart");
     }
 
-    /**
-     * This method returns a valid number within the range [1 to limit] 
-     * If the value cannot be parsed into int. it returns a [-1 ]
-     * @param {string} value the number to evaluate
-     * @param {string} limit the max number it can grow  
-     */
-    validateQty(value, limit) {
-        if (!isNaN(+value) && isFinite(value)) {
-            limit = parseInt(limit);
-            let val = parseInt(value);
-            return (val > limit) ? limit : (val < 1) ? 1 : val;
+
+    setCookie(name, value, days = 100) {
+        if (days == 0) //delete cookie
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+        function addDays(date, days) {
+            let myDate = new Date(date.valueOf());
+            myDate.setDate(myDate.getDate() + days);
+            return myDate;
         }
-        return -1;
+        document.cookie = `${name}=${encodeURI(value)}; expires=${addDays(new Date(),days).toUTCString()}`;
     }
+
+    getCookie(name) {
+        let docCookies = document.cookie;
+        let cIndex = docCookies.indexOf(name + "=");
+        if (cIndex == -1) return null;
+
+        cIndex = docCookies.indexOf("=", cIndex) + 1;
+        let endStr = docCookies.indexOf(";", cIndex);
+        if (endStr == -1) endStr = docCookies.length;
+
+        return decodeURI(docCookies.substring(cIndex, endStr));
+    }
+
+
+    //GLOBAL 
+
+    // send item qty  to db
+    persistItem(dbItem) {
+        let qty = (dbItem.qty <= 0) ? 0 : dbItem.qty;
+        fetcher.API(`${this.url}ztore/${dbItem.id}/qty`, "PUT", qty)
+    }
+
+    // send data to db
+    /**
+     * 
+     * @param {int} id of the item to update 
+     */
+    persistToCart(ItemID) {
+        let inCart = this.getItem(ItemID, "Cart"); //get localCart element
+        let url = `${this.url}cart/${this.getUser()}/`;
+        if (inCart) {
+            fetcher.API(url + ItemID, "GET")
+                .then((item) => {
+                    if (fetcher.isEmpty(item)) { //post a new element
+                        fetcher.API(url, "POST", inCart)
+                    } else { //update current element
+                        fetcher.API(url + ItemID, "PUT", inCart.qty); //update qty
+                    }
+                });
+        } else {
+            fetcher.API(url + ItemID, "DELETE");
+        }
+    }
+
+
+
 
 
 }

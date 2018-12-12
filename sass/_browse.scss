@@ -14,7 +14,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 1.5rem;
     height: 40rem;
-
+    position: relative;
     &__img {
         background-size: contain;
         background-repeat: no-repeat;
@@ -71,7 +71,7 @@
     // }
 
 
-
+    
 
 
     &__name {
@@ -168,3 +168,4 @@
         font-size: 1.2rem;
     }
 }
+

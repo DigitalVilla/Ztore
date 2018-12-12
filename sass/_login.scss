@@ -1,39 +1,94 @@
+.loginBG {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(#000, .4);
+    z-index: 50;
+    transition: all .4s;
+    content: "";
+}
+
+
 .login {
-    height: 100%;
-    width: 100%;
+    display: none;
+    position: fixed;
+    height: 80vh;
+    width: 50vw;
     background-color: $color-secondary;
-    grid-column: col-start 7 /full-end;
+    z-index: 200;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(rgba($color-secondary, .8), rgba($color-primary, .8)), url(../img/dastore.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2rem 2rem rgba(#000, .4);
+    transition: all .5s;
+    z-index: 200;
+    // grid-column: col-start 7 /full-end;
+    // display: none;
+
+
+
+    @media only screen and (max-width: $bp-800) {
+        width: 80vw;
+    }
+
+
+
+    & .login__trigger {
+        font-size: 1.6rem;
+        color: #fff;
+        padding: .5rem 3rem;
+        border: 1px solid #fff;
+        cursor: pointer;
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        opacity: .7;
+        background: none;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+
+
 
     &__title {
-
         width: 80%;
         height: 4rem;
         display: flex;
         justify-content: center;
-        margin: 10vh auto 1rem  auto;
-        
+        align-items: center;
+        margin: 10vh auto 1rem auto;
+
         & span {
             padding-left: 1rem;
             align-self: center;
         }
     }
-    
+
     &__logo {
-        width: 4rem;
+        width: 6rem;
     }
-    
+
     & .message {
         // border: 1px solid blue;
-        color:#fff;
+        color: #fff;
         text-align: center;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         font-weight: 700;
-        visibility: hidden;
+        transition: all .2s;
+        opacity: 0;
     }
-    
+
     & form {
         display: flex;
         width: 80%;
+        height: 100%;
         margin: auto;
         align-items: center;
         flex-direction: column;
@@ -43,21 +98,21 @@
         font-family: inherit;
         margin: 1rem 0;
         width: 100%;
-        height: 4rem;
+        height: 5rem;
         text-align: center;
         // padding: 1.5rem 2rem;
-        font-size: 1.2em;
+        font-size: 1.8em;
         color: $color-primary;
         outline: none;
         font-weight: 600;
         background: rgb(255, 255, 255);
         transition: all 0.3s ease-out;
-    
+
         border: none;
 
 
         &:hover {
-            border-right: 6px solid $color-primary;
+            border-right: 10px solid $color-primary;
         }
     }
 
@@ -93,11 +148,11 @@
             // border: 2px solid  $color-primary;
         }
 
-    
+
         /* When the checkbox is checked, add  background */
         & input:checked~.span {
             background-color: $color-primary;
-            border: 3px solid #fff;
+            border: 1px solid #fff;
         }
 
         /* Create the span/indicator (hidden when not checked) */
@@ -112,7 +167,7 @@
             display: block;
         }
 
-       & .span:after {
+        & .span:after {
             left: 9px;
             top: 5px;
             width: 5px;
@@ -122,26 +177,41 @@
             -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
-          }
+        }
 
-}
-
-& #login__trigger {
-        font-size: 1.6rem;
-        color: #fff;
-        padding: 0 .5rem;
-        border-bottom: 1px solid #fff;
-        cursor: pointer;
     }
+
 
 
     &__btn {
         margin: 1rem 0;
-        height: 4rem;
-        padding: 1rem 0 ;
+        height: 5rem;
+        padding: 1rem 0;
         width: 100%;
     }
+}
 
 
-   
+
+@media only screen and (max-width: $bp-400) {
+    .login {
+        width: 95vw;
+
+        & form {
+            width: 90%;
+        }
+    }
+}
+
+
+.hideOP {
+    opacity: 0 !important;
+}
+
+.hideVis {
+    visibility: hidden;
+}
+
+.hideDis {
+    display: none;
 }

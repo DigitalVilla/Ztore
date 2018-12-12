@@ -1,0 +1,469 @@
+.adminPanel {
+
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: rgb(243, 243, 243);
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 1000;
+    padding: 5vh;
+}
+
+
+.ad__Btn--icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-right: 1rem;
+    // fill: lighten($color-primary,20%);
+    fill: $color-grey-light-2;
+    cursor: pointer;
+    transition: fill .2s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+
+    &_primary:hover {
+        fill: $color-primary;
+    }
+
+    &_success:hover {
+        fill: $color-success;
+    }
+}
+
+.ad__Btn {
+    cursor: pointer;
+    color: $color-grey-light-2;
+    font-weight: inherit;
+    font-size: inherit;
+    border: none;
+    background: transparent;
+    padding-left: 1rem;
+
+    &:active {
+        transform: scale(.95);
+    }
+
+}
+
+.primaryH:hover {
+    color: $color-primary;
+}
+
+
+
+// Table by  Sergey Kupletsky
+// https://codepen.io/zavoloklom/full/IGkDz/
+.adminPanel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    & button {
+        font-size: 1.4rem;
+        padding: 1rem 3rem;
+        margin-left: 1rem;
+        border: 2px solid $color-primary;
+        margin-bottom: 1rem;
+    }
+
+    & .control {
+        margin-right: 2rem;
+
+        
+    }
+    & button.active {
+        background: transparent;
+        color: $color-primary;
+        font-weight: 500;
+    }
+
+}
+
+
+
+
+.adminPanel__header,
+#adminContainer {
+    margin: auto;
+    max-width: 960px;
+}
+
+#adminContainer {
+    margin-top: 3rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 70vh;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+
+
+.shadow-z-1 {
+    box-shadow: 0 5px 1rem 0 rgba(105, 105, 105, 0.048),
+}
+
+/* -- Material Design Table style -------------- */
+
+// Variables
+// ---------------------
+$table-header-font-weight: 500;
+$table-header-font-color: #757575;
+
+$table-cell-padding:  .5rem 2rem;
+$table-condensed-cell-padding: $table-cell-padding/2;
+
+
+$table-bg: #fff;
+$table-bg-accent: #f5f5f5;
+$table-bg-hover: rgba(0, 0, 0, .12);
+$table-bg-active: $table-bg-hover;
+$table-border-color: #e0e0e0;
+
+
+
+// Mixins
+// -----------------
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}
+
+// Tables
+//
+// -----------------
+
+// Baseline styles
+
+
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    // margin-bottom: 1rem;
+    background-color: $table-bg;
+    overflow: hidden;
+    font-size: 1.6rem;
+
+
+    >thead,
+    >tbody,
+    >tfoot {
+        >tr {
+            @include transition(all .3s ease);
+
+            >th,
+            >td {
+                text-align: left;
+                padding: $table-cell-padding;
+                vertical-align: top;
+                border-top: 0;
+                @include transition(all .3s ease);
+            }
+        }
+    }
+
+    >thead>tr>th {
+        font-weight: $table-header-font-weight;
+        color: $table-header-font-color;
+        vertical-align: bottom;
+        border-bottom: 1px solid rgba(102, 102, 102, 0.198);
+    }
+
+    >caption+thead,
+    >colgroup+thead,
+    >thead:first-child {
+        >tr:first-child {
+
+            >th,
+            >td {
+                border-top: 0;
+            }
+        }
+    }
+
+    >tbody+tbody {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    // Nesting
+    .table {
+        background-color: $table-bg;
+    }
+
+    // Remove border
+    .no-border {
+        border: 0;
+    }
+}
+
+// Condensed table w/ half padding
+.table-condensed {
+
+    >thead,
+    >tbody,
+    >tfoot {
+        >tr {
+
+            >th,
+            >td {
+                padding: $table-condensed-cell-padding;
+            }
+        }
+    }
+}
+
+
+// Bordered version
+//
+// Add horizontal borders between columns.
+.table-bordered {
+    border: 0;
+
+    >thead,
+    >tbody,
+    >tfoot {
+        >tr {
+
+            >th,
+            >td {
+                border: 0;
+                border-bottom: 1px solid $table-border-color;
+            }
+        }
+    }
+
+    >thead>tr {
+
+        >th,
+        >td {
+            border-bottom-width: 2px;
+        }
+    }
+}
+
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+.table-striped {
+    >tbody>tr:nth-child(odd) {
+
+        >td,
+        >th {
+            background-color: $table-bg-accent;
+        }
+    }
+}
+
+// Hover effect
+//
+.table-hover {
+    >tbody>tr:hover {
+
+        >td,
+        >th {
+            background-color: $table-bg-hover;
+        }
+    }
+}
+
+// Responsive tables (vertical)
+//
+// Wrap your tables in `.table-responsive-vertical` and we'll make them mobile friendly
+// by vertical table-cell display. Only applies <768px. Everything above that will display normally.
+// For correct display you must add 'data-title' to each 'td'
+.table-responsive-vertical {
+
+    @media screen and (max-width: 768px) {
+
+        // Tighten up spacing
+        >.table {
+            margin-bottom: 0;
+            background-color: transparent;
+
+            >thead,
+            >tfoot {
+                display: none;
+            }
+
+            >tbody {
+                display: block;
+
+                >tr {
+                    display: block;
+                    border: 1px solid $table-border-color;
+                    border-radius: 2px;
+                    margin-bottom: $table-cell-padding;
+
+                    >td {
+                        background-color: $table-bg;
+                        display: block;
+                        vertical-align: middle;
+                        text-align: right;
+                    }
+
+                    >td[data-title]:before {
+                        content: attr(data-title);
+                        float: left;
+                        font-size: inherit;
+                        font-weight: $table-header-font-weight;
+                        color: $table-header-font-color;
+                    }
+                }
+            }
+        }
+
+
+        // Special overrides for the bordered tables
+        >.table-bordered {
+            border: 0;
+
+            // Nuke the appropriate borders so that the parent can handle them
+            >tbody {
+                >tr {
+                    >td {
+                        border: 0;
+                        border-bottom: 1px solid $table-border-color;
+                    }
+
+                    >td:last-child {
+                        border-bottom: 0;
+                    }
+                }
+            }
+        }
+
+        // Special overrides for the striped tables
+        >.table-striped {
+
+            >tbody>tr>td,
+            >tbody>tr:nth-child(odd) {
+                background-color: $table-bg;
+            }
+
+            >tbody>tr>td:nth-child(odd) {
+                background-color: $table-bg-accent;
+            }
+        }
+
+        // Special overrides for hover tables
+        >.table-hover {
+            >tbody {
+
+                >tr:hover>td,
+                >tr:hover {
+                    background-color: $table-bg;
+                }
+
+                >tr>td:hover {
+                    background-color: $table-bg-hover;
+                }
+            }
+        }
+    }
+}
+
+
+
+.table-striped.table-mc-light-blue>tbody>tr:nth-child(odd)>td,
+.table-striped.table-mc-light-blue>tbody>tr:nth-child(odd)>th {
+    background-color: #e1f5fe;
+}
+
+.table-hover.table-mc-light-blue>tbody>tr:hover>td,
+.table-hover.table-mc-light-blue>tbody>tr:hover>th {
+    background-color: $color-grey-light-1;
+}
+
+@media screen and (max-width: 767px) {
+
+    .table-responsive-vertical .table-striped.table-mc-light-blue>tbody>tr>td,
+    .table-responsive-vertical .table-striped.table-mc-light-blue>tbody>tr:nth-child(odd) {
+        background-color: $table-bg;
+    }
+
+    .table-responsive-vertical .table-striped.table-mc-light-blue>tbody>tr>td:nth-child(odd) {
+        background-color: #e1f5fe;
+    }
+
+    .table-responsive-vertical .table-hover.table-mc-light-blue>tbody>tr:hover>td,
+    .table-responsive-vertical .table-hover.table-mc-light-blue>tbody>tr:hover {
+        background-color: $table-bg;
+    }
+
+    .table-responsive-vertical .table-hover.table-mc-light-blue>tbody>tr>td:hover {
+        background-color: #b3e5fc;
+    }
+}
+
+
+.newItem {
+    display: flex;
+    justify-content: flex-end;
+
+
+    &__Btn {
+        // position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 200;
+        background: rgb(243, 243, 243);
+
+        &>.ad__Btn--icon {
+            width: 4rem;
+            height: 4rem;
+            margin-right: 1rem;
+            fill: $color-primary;
+            z-index: 200;
+        }
+
+    }
+
+    &__input>input {
+        height: 100%;
+        text-align: center;
+        margin-right: 1rem;
+        border: 1px solid rgba($color-primary, .3);
+        transition: all .2s;
+        z-index: 00;
+
+        &::-webkit-input-placeholder {
+            color: #3b3b3b
+        }
+
+        &::-moz-placeholder {
+            /* Firefox 19+ */
+            color: #3b3b3b
+        }
+
+    }
+
+    // animation//
+
+
+
+}
+
+
+.exit__btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 2em;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+}
+
+.exit__btn:active {
+    transform: scale(.95);
+}
+
+.exit__btn--icon {
+    width: 4rem;
+    height: 4rem;
+    fill: #ff005e;
+}

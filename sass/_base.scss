@@ -20,6 +20,13 @@ sans-serif;
 $font-display: 'Josefin Sans',
 sans-serif;
 
+// RESPONSIVE BREAKPOINTS
+$bp-1200: 75em; // 1200px /16px 
+$bp-1000: 62.5em; // 1000px
+$bp-800: 50em; // 800px;
+$bp-600: 37.5em; // 600px;
+$bp-400: 25em; // 400px;
+
 *,
 ::after,
 ::before {
@@ -33,6 +40,13 @@ html {
     font-family: sans-serif;
     box-sizing: border-box;
     font-size: 62.5%;
+    width: 100vw;
+    overflow-x: hidden;
+
+    //8px size 
+    @media only screen and (max-width: $bp-1200) {
+        font-size: 50%;
+    }
 }
 
 body {
@@ -40,49 +54,62 @@ body {
     color: $color-grey-dark-2;
     font-weight: 300;
     line-height: 1.6;
-    font-size: 1.6;
+
+    // font-size: 1.6;
+
+
 }
 
 .container {
     display: grid;
     // name the columns for reference
-    grid-template-rows: 90vh min-content 100vh repeat(3, min-content);
-    grid-template-columns: [sidebar-start] 6rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    grid-template-rows: 100vh min-content 80vh repeat(3, min-content);
+    grid-template-columns: [sidebar-start] 5rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+
+    //8px size 
+    @media only screen and (max-width: $bp-600) {
+        display: grid;
+        grid-template-rows: 90vh repeat(7, min-content);
+        grid-template-columns: [sidebar-start] 4rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    }
 }
 
 
 
 ::selection {
-    background: #ffffff; /* WebKit/Blink Browsers */
+    background: #ebebeb;
+    /* WebKit/Blink Browsers */
     color: $color-primary;
-  }
-  ::-moz-selection {
-    background: #ffffff; /* Gecko Browsers */
-    color: $color-primary;
-  }
+}
 
-  button:focus, button:active {
+::-moz-selection {
+    background: #ebebeb;
+    /* Gecko Browsers */
+    color: $color-primary;
+}
+
+button:focus,
+button:active {
     outline: none !important;
-    outline:0 !important;
+    outline: 0 !important;
 }
 
 button::-moz-focus-inner {
     border: 0;
-  }
-  
- input::placeholder {
+}
+
+input::placeholder {
     color: rgb(182, 36, 158);
     opacity: .5;
 }
-  
-input::-moz-focus-inner { 
-    border: 0; 
-    border: none; 
-  }
+
+input::-moz-focus-inner {
+    border: 0;
+    border: none;
+}
 
 
 /* Larger than mobile */
 @media (min-width: 400px) {
-    body {
-    }
+    body {}
 }
